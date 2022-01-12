@@ -9,7 +9,15 @@ How much of an app can you build with it so far?
 
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, GestureResponderEvent, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Alert, 
+  Button, 
+  GestureResponderEvent, 
+  Image, 
+  StyleSheet, 
+  Text, 
+  TouchableOpacity, 
+  View,
+   } from 'react-native';
 
 // View -> UIView (iOS)
 export default function App() { //app is a function component
@@ -21,14 +29,14 @@ export default function App() { //app is a function component
   }
 
   const coordsEventPressHandler = (evt:GestureResponderEvent) => {
-    var locX = evt.nativeEvent.pageX;
-    var locY = evt.nativeEvent.pageY;
+    var locX = evt.nativeEvent.locationX;
+    var locY = evt.nativeEvent.locationY;
     printCoordinates(locX, locY);
   }
 
   // function created to hold logic handlers for clicking the text.
-  const handlePress = () => console.log();
-  printCoordinates();
+  /*const handlePress = () => console.log();
+  printCoordinates();*/
 
 
   const pressImage = (e) => console.log("image Pressed", e);
@@ -43,19 +51,15 @@ export default function App() { //app is a function component
   return ( // returning jsx expression
     <View style={styles.container}>
       <TouchableOpacity onPress={(coordEvt) => coordsEventPressHandler(coordEvt)}>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </Text>
-        </TouchableOpacity>
-        <View>
+        <View style={styles.containerB}>
           <Text>
-          More of the same - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </Text>
         </View>
+      </TouchableOpacity>
 
         <StatusBar style="auto" />
     </View>
-    // view is like a div and contains some style and text.
   );
 }
 
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
 
   containerB: {
     flex: 8,
-    backgroundColor: 'white', // named colours, RGB values, or hex values can be used to specify colours
+    backgroundColor: 'grey', // named colours, RGB values, or hex values can be used to specify colours
     alignItems: 'center',
     justifyContent: 'center',
   },
