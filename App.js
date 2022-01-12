@@ -7,37 +7,53 @@ How much of an app can you build with it so far?
 * REMEMBER - All components must be imported View, Text, Image, Touchable etc
 */
 
-
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Button, GestureResponderEvent, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 // View -> UIView (iOS)
 export default function App() { //app is a function component
   console.log("App Executed");
 
+  // prints the coordinates of X and Y to the console of where the user presses on screen
+  const printCoordinates = (x:number, y:number) => {
+    console.log("X = " + x + " Y = " + y);
+  }
+
+  const coordsEventPressHandler = (evt:GestureResponderEvent) => {
+    var locX = evt.nativeEvent.pageX;
+    var locY = evt.nativeEvent.pageY;
+    printCoordinates(locX, locY);
+  }
+
   // function created to hold logic handlers for clicking the text.
-  const handlePress = () => console.log("Text pressed");
+  const handlePress = () => console.log();
+  printCoordinates();
+
+
+  const pressImage = (e) => console.log("image Pressed", e);
+  // the above line of code passes all PressEvents as parameters.
+  // the function prints them to the console for us to choose one
+  // I THINK e.pressEventFromList will print that named specific PressEvent to the console
+  //  how do i get the coordinates from this??
+  // e.g. console.log ("text", e.timeStamp) prints to the console the text and a timestamp of now.
+
+  
 
   return ( // returning jsx expression
     <View style={styles.container}>
-      <Text numberOfLines={1} onPress={handlePress}>Hello, ReactNative!</Text>
-      <View style={styles.left}>
-      <TouchableOpacity onPress={() => console.log("Image pressed")}>
-      <Image source={{
-        width: 200,
-        height: 300,
-        uri: "https://picsum.photos/200/300",
-      }} />
-        
-      </TouchableOpacity>
-        
-      </View>
-      <View>
+      <TouchableOpacity onPress={(coordEvt) => coordsEventPressHandler(coordEvt)}>
         <Text>
-          More Text here please
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </Text>
-      </View>
-      <StatusBar style="auto" />
+        </TouchableOpacity>
+        <View>
+          <Text>
+          More of the same - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </Text>
+        </View>
+
+        <StatusBar style="auto" />
     </View>
     // view is like a div and contains some style and text.
   );
@@ -45,6 +61,13 @@ export default function App() { //app is a function component
 
 const styles = StyleSheet.create({
   container: {
+    flex: 8,
+    backgroundColor: 'white', // named colours, RGB values, or hex values can be used to specify colours
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  containerB: {
     flex: 8,
     backgroundColor: 'white', // named colours, RGB values, or hex values can be used to specify colours
     alignItems: 'center',
@@ -59,4 +82,13 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: 'red'
   }
+
+  // Later on in your styles..
+  /* backgroundVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  }, */
 });
