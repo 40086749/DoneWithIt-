@@ -24,19 +24,40 @@ export default function App() { //app is a function component
   console.log("App Executed");
 
   // prints the coordinates of X and Y to the console of where the user presses on screen
-  const printCoordinates = (x:number, y:number) => {
-    console.log("X = " + x + " Y = " + y);
+  const printCoordinates = (lx:number, ly:number, px:Number, py:number) => {
+    console.log("locationX = " + lx + " locationY = " + ly + " pageX = " + px + " pageY = " + py);
   }
 
   const coordsEventPressHandler = (evt:GestureResponderEvent) => {
     var locX = evt.nativeEvent.locationX;
     var locY = evt.nativeEvent.locationY;
-    printCoordinates(locX, locY);
+    var pageX = evt.nativeEvent.pageX;
+    var pageY = evt.nativeEvent.pageY;
+    printCoordinates(locX, locY, pageX, pageY);
   }
 
   // function created to hold logic handlers for clicking the text.
   /*const handlePress = () => console.log();
   printCoordinates();*/
+
+  /* state = {
+    x: 0,
+    y: 0,
+  }; */
+
+  const handleLayout = ({ nativeEvent: {layout: {x, y, width, height}}}) => {
+    //this.setState({ x: nativeEvent.layout.x})
+    console.log ("x = " + x + " y = " + y + " width = " + width + " height = " + height);
+  };
+ // printing to the console the width and height of the view with onLayout={handleLayout} prop attatched
+
+/*  const layoutPrint = (evt:onLayout) => {
+   var viewX = evt.nativeEvent.x;
+   var viewY = evt.nativeEvent.y;
+   handleLayout(viewX, viewY)
+ } */
+
+
 
 
   const pressImage = (e) => console.log("image Pressed", e);
@@ -49,19 +70,20 @@ export default function App() { //app is a function component
   
 
   return ( // returning jsx expression
-    <View style={styles.container}>
+    <View style={styles.container} onLayout= {handleLayout}>
       <TouchableOpacity onPress={(coordEvt) => coordsEventPressHandler(coordEvt)}>
-        <View style={styles.containerB}>
+        <View style={styles.coords} onLayout={handleLayout}>
           <Text>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </Text>
         </View>
       </TouchableOpacity>
-
-        <StatusBar style="auto" />
+      <StatusBar style="auto" />
     </View>
   );
 }
+//  onLayout method started. How to fill out??
+
 
 const styles = StyleSheet.create({
   container: {
@@ -72,7 +94,7 @@ const styles = StyleSheet.create({
   },
 
   containerB: {
-    flex: 8,
+    flex: 1,
     backgroundColor: 'grey', // named colours, RGB values, or hex values can be used to specify colours
     alignItems: 'center',
     justifyContent: 'center',
@@ -85,7 +107,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: 'red'
-  }
+  },
 
   // Later on in your styles..
   /* backgroundVideo: {
