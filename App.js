@@ -45,6 +45,10 @@ export default function App() { //app is a function component
     y: 0,
   }; */
 
+  const printElementDetails = (elHeight:number, elWidth:number, elX:number, elY:number) => {
+    console.log("x = " + elX + " y = " + elY + " width = " + elWidth + " height = " + elHeight)
+  }
+
   const handleLayout = ({ nativeEvent: {layout: {x, y, width, height}}}) => {
     //this.setState({ x: nativeEvent.layout.x})
     console.log ("x = " + x + " y = " + y + " width = " + width + " height = " + height);
@@ -70,14 +74,16 @@ export default function App() { //app is a function component
   
 
   return ( // returning jsx expression
-    <View style={styles.container} onLayout= {handleLayout}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={(coordEvt) => coordsEventPressHandler(coordEvt)}>
-        <View style={styles.coords} onLayout={handleLayout}>
+        <View style={styles.coords}>
           <Text>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </Text>
         </View>
       </TouchableOpacity>
+      <View style={styles.circle} onLayout={({ nativeEvent}) => console.log (nativeEvent.layout)}/>
+        <View style={styles.circleB} onLayout={handleLayout}/>
       <StatusBar style="auto" />
     </View>
   );
@@ -107,6 +113,24 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: 'red'
+  },
+  circle: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    position: 'relative',
+    elevation: 10,
+    backgroundColor: 'yellow',
+  },
+  circleB: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    position: 'absolute',
+    top: 10,
+    right: 20,
+    elevation: 10,
+    backgroundColor: 'purple',
   },
 
   // Later on in your styles..
