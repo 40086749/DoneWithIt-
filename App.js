@@ -7,7 +7,7 @@ How much of an app can you build with it so far?
 * REMEMBER - All components must be imported View, Text, Image, Touchable etc
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Alert, 
   Button, 
@@ -50,11 +50,20 @@ export default function App() { //app is a function component
   }
 
   const handleLayout = ({ nativeEvent: {layout: {x, y, width, height}}}) => {
-    //this.setState({ x: nativeEvent.layout.x})
     console.log ("x = " + x + " y = " + y + " width = " + width + " height = " + height);
   };
  // printing to the console the width and height of the view with onLayout={handleLayout} prop attatched
 
+ const isolateLayoutX = () => {
+   var xCoordinate = handleLayout.x;
+   console.log(xCoordinate);
+ }
+
+
+
+
+
+ 
 /*  const layoutPrint = (evt:onLayout) => {
    var viewX = evt.nativeEvent.x;
    var viewY = evt.nativeEvent.y;
@@ -71,7 +80,39 @@ export default function App() { //app is a function component
   //  how do i get the coordinates from this??
   // e.g. console.log ("text", e.timeStamp) prints to the console the text and a timestamp of now.
 
+
   
+  
+  /*
+  Make a function that takes in X and Y coordinates, and positions
+  element at the stated position
+
+  ? Where do i get the coordinates?
+  ? HOW do i get the coordinates?
+  ? How do i set them as readable values?
+  ? How do i pass them in to the function?
+  */
+  const placeSquareAtObjectLayout = () => {
+    const name = "Adam"
+    return(
+      <View>
+        <Text> Hello World, welcome {name} </Text>
+      </View>
+    );
+  }
+
+  const layoutObject = {
+      "height": 10,
+      "width": 10,
+      "x": 300,
+      "y": 90,
+    }
+
+
+
+
+
+
 
   return ( // returning jsx expression
     <View style={styles.container}>
@@ -83,7 +124,8 @@ export default function App() { //app is a function component
         </View>
       </TouchableOpacity>
       <View style={styles.circle} onLayout={({ nativeEvent}) => console.log (nativeEvent.layout)}/>
-        <View style={styles.circleB} onLayout={handleLayout}/>
+        <View style={styles.square} onLayout={handleLayout}/>
+        <View>{placeSquareAtObjectLayout(layoutObject)}</View>
       <StatusBar style="auto" />
     </View>
   );
@@ -118,17 +160,20 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 50,
-    position: 'relative',
+    position: 'absolute',
+    top: 230,
+    right: 50,
     elevation: 10,
-    backgroundColor: 'yellow',
+    borderColor: 'red',
+    borderWidth: 5,
   },
-  circleB: {
+  square: {
     height: 100,
     width: 100,
-    borderRadius: 50,
+    borderRadius: 0,
     position: 'absolute',
     top: 10,
-    right: 20,
+    right: 50,
     elevation: 10,
     backgroundColor: 'purple',
   },
