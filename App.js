@@ -23,6 +23,9 @@ import { Alert,
 export default function App() { //app is a function component
   console.log("App Executed");
 
+  // Master array created to house array created when user clicks element
+  let masterClickArray = [];
+
   // prints the coordinates of X and Y to the console of where the user presses on screen
   const printCoordinates = (lx:number, ly:number, px:Number, py:number) => {
     console.log("locationX = " + lx + " locationY = " + ly + " pageX = " + px + " pageY = " + py);
@@ -34,6 +37,29 @@ export default function App() { //app is a function component
     var pageX = evt.nativeEvent.pageX;
     var pageY = evt.nativeEvent.pageY;
     printCoordinates(locX, locY, pageX, pageY);
+  }
+
+
+  /*  
+  *   below takes in the click event
+  *   registers click coordinates
+  *   saves coordinates to array
+  *   pushes to master array    
+  */
+  const registerCoordinatesToArray = (evt) => {
+    var lx = evt.nativeEvent.locationX;
+    var ly = evt.nativeEvent.locationY;
+    var px = evt.nativeEvent.pageX;
+    var py = evt.nativeEvent.pageY; 
+    var coordinatesArray = [lx, ly, px, py]
+    masterClickArray.push(coordinatesArray);
+  }
+
+  /*
+  *   outputs masterClickArray to console
+  */
+  const printCoordinatesArray = () => {
+    console.log( masterClickArray );
   }
 
   // function created to hold logic handlers for clicking the text.
@@ -125,7 +151,10 @@ export default function App() { //app is a function component
       </TouchableOpacity>
       <View style={styles.circle} onLayout={({ nativeEvent}) => console.log (nativeEvent.layout)}/>
         <View style={styles.square} onLayout={handleLayout}/>
-        <View>{placeSquareAtObjectLayout(layoutObject)}</View>
+        <TouchableOpacity>
+        <Button title="click me bitch" style={styles.square} onPress={(arrayEvent) => registerCoordinatesToArray(arrayEvent)}></Button>
+        </TouchableOpacity>
+        <Button title= "show me bitch" onPress={() => printCoordinatesArray()}></Button>
       <StatusBar style="auto" />
     </View>
   );
@@ -168,8 +197,8 @@ const styles = StyleSheet.create({
     borderWidth: 5,
   },
   square: {
-    height: 100,
-    width: 100,
+    height: 90,
+    width: 90,
     borderRadius: 0,
     position: 'absolute',
     top: 10,
